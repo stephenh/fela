@@ -1,5 +1,5 @@
-const regex = /^(:|\[|>|&)/
+const prefix = /^(:|\[|>|&)/
 
 export default function isNestedSelector(property) {
-  return regex.test(property)
+  return prefix.test(property) || property.endsWith('&')
 }

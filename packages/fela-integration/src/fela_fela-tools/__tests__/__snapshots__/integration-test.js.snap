@@ -16,6 +16,8 @@ exports[`Fela with Fela Tools integration Rendering rules should remove undefine
 
 exports[`Fela with Fela Tools integration Rendering rules should render any nested selector with the &-prefix 1`] = `".a{color:red}.b~#foo{color:blue}.c .bar{color:green}"`;
 
+exports[`Fela with Fela Tools integration Rendering rules should render any nested selector with the &-suffix 1`] = `".a{color:red}.bar:hover .b{color:green}"`;
+
 exports[`Fela with Fela Tools integration Rendering rules should render attribute selectors 1`] = `".a{color:red}.b[bool=true]{color:blue}"`;
 
 exports[`Fela with Fela Tools integration Rendering rules should render attribute selectors and add specificity prefix 1`] = `".parent .a{color:red}.parent .b[bool=true]{color:blue}"`;

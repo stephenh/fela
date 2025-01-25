@@ -200,7 +200,13 @@ export default function createRenderer(config = {}) {
       )
     },
 
-    _renderStyleToClassNames(style, pseudo = '', media = '', support = '') {
+    _renderStyleToClassNames(
+      style,
+      pseudo = '',
+      media = '',
+      support = '',
+      psuedoPrefix = false
+    ) {
       let classNames = ''
 
       const applyPlugin = (processed, plugin) => plugin(processed, renderer)
@@ -214,7 +220,8 @@ export default function createRenderer(config = {}) {
               value,
               pseudo + normalizeNestedProperty(property),
               media,
-              support
+              support,
+              property.endsWith('&')
             )
           } else if (isMediaQuery(property)) {
             const combinedMediaQuery = generateCombinedMediaQuery(
@@ -300,7 +307,8 @@ Check http://fela.js.org/docs/basics/Rules.html#styleobject for more information
               value,
               pseudo,
               media,
-              support
+              support,
+              psuedoPrefix
             )
           }
 
@@ -316,7 +324,15 @@ Check http://fela.js.org/docs/basics/Rules.html#styleobject for more information
       return classNames
     },
 
-    _renderStyleToCache(reference, property, value, pseudo, media, support) {
+    _renderStyleToCache(
+      reference,
+      property,
+      value,
+      pseudo,
+      media,
+      support,
+      psuedoPrefix
+    ) {
       // we remove undefined values to enable
       // usage of optional props without side-effects
       if (isUndefinedValue(value)) {
@@ -336,7 +352,8 @@ Check http://fela.js.org/docs/basics/Rules.html#styleobject for more information
         className,
         pseudo,
         config.specificityPrefix,
-        renderer.propertyPriority[property]
+        renderer.propertyPriority[property],
+        psuedoPrefix
       )
 
       const change = {

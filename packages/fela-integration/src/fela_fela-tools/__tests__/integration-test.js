@@ -128,6 +128,21 @@ describe('Fela with Fela Tools integration', () => {
       expect(renderToString(renderer)).toMatchSnapshot()
     })
 
+    it('should render any nested selector with the &-suffix', () => {
+      const rule = () => ({
+        color: 'red',
+        '.bar:hover &': {
+          color: 'green',
+        },
+      })
+      const renderer = createRenderer()
+
+      renderer.renderRule(rule)
+
+      expect(renderToString(renderer)).toMatchSnapshot()
+    })
+
+
     it('should render media queries', () => {
       const rule = () => ({
         color: 'red',
