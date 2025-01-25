@@ -7,11 +7,13 @@ describe('Validating nested selectors', () => {
     expect(isNestedSelector('> div')).toEqual(true)
     expect(isNestedSelector('& .foo')).toEqual(true)
     expect(isNestedSelector('& ~ #id')).toEqual(true)
+    expect(isNestedSelector('.foo &')).toEqual(true)
   })
 
   it('should return false', () => {
     expect(isNestedSelector('.foo')).toEqual(false)
     expect(isNestedSelector(' .foo')).toEqual(false)
     expect(isNestedSelector('~ #id')).toEqual(false)
+    expect(isNestedSelector('#id & .foo')).toEqual(false)
   })
 })
