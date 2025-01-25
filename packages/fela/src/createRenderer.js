@@ -10,7 +10,6 @@ import {
   isNestedSelector,
   isUndefinedValue,
   isSupport,
-  normalizeNestedProperty,
   processStyleWithPlugins,
   STATIC_TYPE,
   RULE_TYPE,
@@ -200,13 +199,7 @@ export default function createRenderer(config = {}) {
       )
     },
 
-    _renderStyleToClassNames(
-      style,
-      pseudo = '',
-      media = '',
-      support = '',
-      psuedoPrefix = false
-    ) {
+    _renderStyleToClassNames(style, pseudo = '', media = '', support = '') {
       let classNames = ''
 
       const applyPlugin = (processed, plugin) => plugin(processed, renderer)
@@ -218,10 +211,9 @@ export default function createRenderer(config = {}) {
           if (isNestedSelector(property)) {
             classNames += renderer._renderStyleToClassNames(
               value,
-              pseudo + normalizeNestedProperty(property),
+              pseudo + property,
               media,
-              support,
-              property.endsWith('&')
+              support
             )
           } else if (isMediaQuery(property)) {
             const combinedMediaQuery = generateCombinedMediaQuery(
@@ -307,8 +299,7 @@ Check http://fela.js.org/docs/basics/Rules.html#styleobject for more information
               value,
               pseudo,
               media,
-              support,
-              psuedoPrefix
+              support
             )
           }
 
@@ -324,15 +315,7 @@ Check http://fela.js.org/docs/basics/Rules.html#styleobject for more information
       return classNames
     },
 
-    _renderStyleToCache(
-      reference,
-      property,
-      value,
-      pseudo,
-      media,
-      support,
-      psuedoPrefix
-    ) {
+    _renderStyleToCache(reference, property, value, pseudo, media, support) {
       // we remove undefined values to enable
       // usage of optional props without side-effects
       if (isUndefinedValue(value)) {
@@ -352,8 +335,7 @@ Check http://fela.js.org/docs/basics/Rules.html#styleobject for more information
         className,
         pseudo,
         config.specificityPrefix,
-        renderer.propertyPriority[property],
-        psuedoPrefix
+        renderer.propertyPriority[property]
       )
 
       const change = {

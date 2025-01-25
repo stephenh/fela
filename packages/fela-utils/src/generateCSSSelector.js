@@ -2,12 +2,12 @@ export default function generateCSSSelector(
   className,
   pseudo = '',
   specificityPrefix = '',
-  propertyPriority = 1,
-  psuedoPrefix = false
+  propertyPriority = 1
 ) {
   const classNameSelector = `.${className}`.repeat(propertyPriority)
-  if (psuedoPrefix) {
-    return `${specificityPrefix}${pseudo}${classNameSelector}`
+  if (pseudo.includes('&')) {
+    pseudo = pseudo.replace('&', classNameSelector)
+    return `${specificityPrefix}${pseudo}`
   }
   return `${specificityPrefix}${classNameSelector}${pseudo}`
 }
