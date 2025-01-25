@@ -142,7 +142,6 @@ describe('Fela with Fela Tools integration', () => {
       expect(renderToString(renderer)).toMatchSnapshot()
     })
 
-
     it('should render media queries', () => {
       const rule = () => ({
         color: 'red',
